@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2020 at 01:56 PM
+-- Generation Time: Aug 10, 2020 at 05:48 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `kpg`
+-- Database: `kpg_new`
 --
 
 -- --------------------------------------------------------
@@ -788,7 +788,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2019_08_19_000000_create_failed_jobs_table', 1),
 (3, '2020_07_15_114056_create_products_table', 1),
 (4, '2020_07_15_121143_create_categories_table', 2),
-(5, '2020_07_15_160203_create_sliders_table', 3);
+(5, '2020_07_15_160203_create_sliders_table', 3),
+(6, '2020_08_05_153304_create_products_details_table', 4);
 
 -- --------------------------------------------------------
 
@@ -801,13 +802,10 @@ CREATE TABLE `products` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `size` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `weight` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `thickness` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `water_absorption` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `composition` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `installation` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `working_life` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image1` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image2` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image3` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image4` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -815,12 +813,36 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `title`, `category_id`, `image`, `size`, `weight`, `thickness`, `water_absorption`, `composition`, `installation`, `working_life`, `created_at`) VALUES
-(5, 'ssvd', '1', 'img/products/red.png', 'GN', 'NN', 'GG', 'GG', 'GG', 'GG', 'GG', '2020-07-20 12:51:59'),
-(6, 'vdvs', '2', 'img/products/red.png', '', '', '', '', '', '', '', '2020-07-20 12:52:09'),
-(7, 'ghh', '9', 'img/products/red.png', '', '10', '2', 'good', 'hggg', 'gygyugy', 'gygy', '2020-07-20 12:55:58'),
-(8, 'new', '1', 'img/products/red.png', 'gyugy', 'ygyyg', 'gyygygy', 'ygygyg', 'gygygyg', 'yygygy', 'GG', '2020-07-20 12:57:51'),
-(9, 'fttft', '10', 'img/products/red.png', 'yygygy', 'ygygyg', 'ggygyg', 'ygyyg', 'gyg', 'gyy', 'gyg', '2020-07-20 13:00:48');
+INSERT INTO `products` (`id`, `title`, `category_id`, `image`, `image1`, `image2`, `image3`, `image4`, `created_at`) VALUES
+(12, 'p1', '1', 'cardamom-benefits-732x549-thumbnail.jpg', 'download.png', 'download.png', 'download.png', '', '2020-08-09 09:32:43'),
+(13, 'p2', '2', 'download.png', 'cardamom-benefits-732x549-thumbnail.jpg', 'cardamom-benefits-732x549-thumbnail.jpg', 'cardamom-benefits-732x549-thumbnail.jpg', '', '2020-08-09 13:02:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_details`
+--
+
+CREATE TABLE `products_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `specifications` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `values` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `products_details`
+--
+
+INSERT INTO `products_details` (`id`, `product_id`, `specifications`, `values`, `created_at`, `updated_at`) VALUES
+(4, '12', 'size', '10', NULL, NULL),
+(5, '12', 'color', 'red', NULL, NULL),
+(6, '12', 'weight', '10', NULL, NULL),
+(7, '13', 'size', '30', NULL, NULL),
+(8, '13', 'weight', '2', NULL, NULL),
+(9, '13', 'thickness', '10', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -842,7 +864,7 @@ CREATE TABLE `sliders` (
 --
 
 INSERT INTO `sliders` (`id`, `image1`, `image2`, `image3`, `created_at`, `updated_at`) VALUES
-(1, 'img/slider1.jpg', 'img/slider1.jpg', 'img/slider1.jpg', NULL, NULL);
+(1, 'slider1.jpg', 'slider2.jpg', 'slider3.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -962,6 +984,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `products_details`
+--
+ALTER TABLE `products_details`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sliders`
 --
 ALTER TABLE `sliders`
@@ -1018,12 +1046,18 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `products_details`
+--
+ALTER TABLE `products_details`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
