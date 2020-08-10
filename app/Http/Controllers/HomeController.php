@@ -115,11 +115,19 @@ class HomeController extends Controller
 
     {
       $data['id']=$id;
-        $data['category']=Category::get();
+        
         $data['product_detail'] = Products::join('products_details', 'products.id', '=', 'products_details.product_id')
         ->select('*')
         ->where('product_id',$id)
         ->get();
+
+        foreach($data['product_detail'] as $cate_id){
+          $cat_id = $cate_id->category_id;
+       }
+       $data['first_category']=Category::where('id',$cat_id) ->get();
+       $data['category']=Category::where('id','!=' ,$cat_id) ->get();
+       $data['cat_id']=$cat_id;
+
        
         $data['branches'] = Branches::join('state', 'branches.state', '=', 'state.StCode')
         ->select('branches.state', 'state.StateName')

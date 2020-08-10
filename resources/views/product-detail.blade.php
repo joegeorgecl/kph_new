@@ -13,21 +13,18 @@
                     <div class="faq-details">
                         <div class="panel-group" id="accordion">
                             <!-- Panel Default -->
-                            <?php
-                            $i=1;
-                            ?>
-                            @foreach($category as $category)
                             
-                            @if ($i==1) 
+                            @foreach($first_category as $first_category)
+                            
                             <div class="panel panel-default border-none">
                                 <div class="panel-heading">
                                     <h4 class="check-title">
-                                        <a data-toggle="collapse" class="active" data-parent="#accordion"  href="#{{$category->id}}" >
-                                            <span class="acc-icons"></span>{{$category->category}}
+                                        <a data-toggle="collapse" class="active" data-parent="#accordion"  href="#{{$first_category->id}}" >
+                                            <span class="acc-icons"></span>{{$first_category->category}}
                                         </a>
                                     </h4>
                                 </div>
-                                <div  class="panel-collapse collapse in" id="{{$category->id}}">
+                                <div  class="panel-collapse collapse in" id="{{$first_category->id}}">
                                    <div class="panel-body border-none innerpanel" id="check1">
                                 
                                    
@@ -37,8 +34,8 @@
                             </div>
                             </div>
                             
-                            @else
-                            
+                            @endforeach
+                            @foreach($category as $category)
                                 <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="check-title">
@@ -54,11 +51,6 @@
                                     </div>
                                 </div>
                             </div>
-                          
-                            @endif
-                            <?php
-                            $i++;
-                            ?>
                             
                             @endforeach
                            
@@ -163,7 +155,7 @@
 
      <script>
    $(document).ready(function() {
-    var cat_id = 1;
+    var cat_id = <?php echo $cat_id;?>;
         $.ajax({
             url: "/productsdetails",
             type: "POST",
